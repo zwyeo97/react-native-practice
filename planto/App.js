@@ -113,16 +113,17 @@
 
 
 import React, {useEffect} from 'react';
-import { View, Text, Image, ScrollView, TextInput } from 'react-native';
+import { View, Text, Image, ScrollView, TextInput, SafeAreaView } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import IndiTabs from './components/contentList'
-import MainPage from './components/mainPage'
+import IndiTabs from './components/contentList';
+import MainPage from './components/mainPage';
+import {styles} from './css/style';
 
 const App = () => {
   return (
-    <ScrollView>
+    <View style={styles.container}>
       <MainPage></MainPage>
-    </ScrollView>
+    </View>
   );
 }
 
