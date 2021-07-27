@@ -5,7 +5,15 @@ import IndiTabs from './contentList';
 
 
 const MainPage = () => {
+    return(
+        <ScrollView>
+            <View>
+                <Text>Screen animation will begin in 3 seconds</Text>
 
+            </View>
+        </ScrollView>
+
+    )
 
 }
 

@@ -23,16 +23,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b195729-7a8d-44c3-9b32-e6e8278b97bf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/planto/actions/getData.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/planto/components/contentList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/planto/components/mainPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/planto/constants/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/planto/reducers/dataReducer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/planto/store/store.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/planto/css/style.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/planto/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/planto/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/planto/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/planto/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/planto/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/planto/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/planto/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/planto/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/planto/components/contentList.js" beforeDir="false" afterPath="$PROJECT_DIR$/planto/components/contentList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/planto/components/mainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/planto/components/mainPage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +45,11 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\qiaoy\Desktop\planto\planto\css" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

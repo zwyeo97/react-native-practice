@@ -116,11 +116,12 @@ import React, {useEffect} from 'react';
 import { View, Text, Image, ScrollView, TextInput } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import IndiTabs from './components/contentList'
+import MainPage from './components/mainPage'
 
 const App = () => {
   return (
     <ScrollView>
-      <IndiTabs></IndiTabs>
+      <MainPage></MainPage>
     </ScrollView>
   );
 }
