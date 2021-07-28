@@ -1,44 +1,38 @@
-import React, {useEffect} from 'react';
-import {Animated, View, Text, Image, ScrollView, TextInput, SafeAreaView, FlatList , TouchableWithoutFeedback } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {getData} from '../actions/getData';
-import {styles} from '../css/style';
+import React, { useEffect, useRef } from 'react';
+import { Animated, Easing, View, Text, Image, ScrollView, TextInput, SafeAreaView, FlatList, TouchableWithoutFeedback } from 'react-native';
+import { styles } from '../css/style';
+import * as Animatable from 'react-native-animatable';
 
-const Tabs = ({title, body}) => 
-  (
-
-    <View style={styles.item}>
+const Tabs = ({ title, body, index }) => {
+  let transitionDur = useRef(500);
+  
+  return (
+    <Animatable.View animation='fadeIn' style={styles.item} duration={transitionDur.current} delay={index  ? (index * transitionDur.current  ) / 5  : 0} useNativeDriver >
       <Text style={styles.title}>{title}</Text>
       <Text>{body}</Text>
-    </View>
+    </Animatable.View >
+
   )
-  
+
+}
 
 
+const IndiTabs = ({content}) => {
 
-const IndiTabs = () => {
-    const {content} = useSelector(state => state.dataReducer);
-    const dispatch = useDispatch();
-    const fetchData = () => dispatch(getData());
+  const renderItem = ({ item }) => {
+    return (
 
-    const renderItem = ({item}) => {
-        return(
-          
-          <Tabs title={item.title} body={item.body} />
-          
-      )
+      <Tabs title={item.title} body={item.body} index={item.id} />
+
+    )
   }
 
-    useEffect(() => {
-        fetchData();
-      }, []);
+  return (
 
-    return(
-      <Animated.View>
-        <FlatList data={content} renderItem={renderItem} keyExtractor={item => item.id} />
-      </Animated.View>
+    <FlatList data={content} renderItem={renderItem} keyExtractor={item => item.id} />
 
-    );
+
+  );
 }
 
 export default IndiTabs;

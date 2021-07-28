@@ -1,144 +1,206 @@
-import React, {useEffect, useState} from 'react';
-import {Animated, Easing, View, Text, Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import React, { useEffect, useState, useRef } from 'react';
+import { Animated, Easing, View, Text, Image, ScrollView, TextInput, TouchableWithoutFeedback } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import IndiTabs from './contentList';
-import {styles} from '../css/style';
-
-
-
+import { styles } from '../css/style';
+import { getData } from '../actions/getData';
 
 const MainPage = () => {
-    let pos = new Animated.ValueXY({x:0, y:0});
-    let size = new Animated.ValueXY({x:250, y:250});
-    let size2 = new Animated.Value(50);
+    const { content } = useSelector(state => state.dataReducer);
+    const dispatch = useDispatch();
+    const fetchData = () => dispatch(getData());
 
-    let size2_ = size2.interpolate({
-        inputRange: [0, 1],
-        outputRange: [50, 250],
+    const [showList, setShowList] = useState(false);
+    const wi = useRef(300);
+    const hi = useRef(200);
+    const pressed = useRef(false);
+    const padd = useRef(0);
 
+    let initVal = new Animated.Value(0);
+    let initVal2 = new Animated.Value(0);
+    let finVal = new Animated.Value(0);
+    let finVal2 = new Animated.Value(0);
+
+    let transY = initVal.interpolate({
+        inputRange: [0, 0.5, 1],
+        outputRange: [0, -140, -280]
     })
 
-    let pos2 = new Animated.Value(0);
-    let pos2_1 = pos2.interpolate({
-        inputRange: [0, 1],
-        outputRange:[0, -300]
-    })
-
-    let pos2_2 = pos2.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 1]
-    })
-
-    let pos2_3 = pos2.interpolate({
+    let xScale = initVal.interpolate({
         inputRange: [0, 1],
         outputRange: [1, 2],
     })
 
-    let pos2_4 = pos2.interpolate({
+    let yScale = initVal.interpolate({
         inputRange: [0, 1],
         outputRange: [1, 0.5]
     })
 
-    let pos2_5 = pos2.interpolate({
+    let xDescale = initVal.interpolate({
         inputRange: [0, 1],
         outputRange: [1, 0.5]
     })
 
-    let pos2_6 = pos2.interpolate({
+    let yDescale = initVal.interpolate({
         inputRange: [0, 1],
         outputRange: [1, 2]
     })
 
-    const expand2 = easing => {
-        Animated.timing(size2, {
-            toValue: 1,
-            duration: 1200,
-            easing,
-            useNativeDriver: false,
+    let changeOpacity = initVal2.interpolate({
+        inputRange: [0, 0.25, 0.5, 0.75, 1],
+        outputRange: [1, 0, 0, 0.75, 1]
+
+    })
+
+    let changeIconOpa = initVal2.interpolate({
+        inputRange: [0, 0.25, 0.5, 0.75, 1],
+        outputRange: [0, 0, 0, 0.75, 1]
+
+    })
+
+
+    const moveAndExpand = easing => {
+        fetchData();
+        if (!pressed.current) {
+            Animated.parallel(
+                [
+                    Animated.timing(initVal, {
+                        toValue: 1,
+                        duration: 300,
+                        easing,
+                        useNativeDriver: true,
+
+                    }),
+                    Animated.timing(initVal2, {
+                        toValue: 1,
+                        duration: 300,
+                        easing,
+                        useNativeDriver: true,
+                    }),
+                ]
+
+            ).start(() => {
+                wi.current = 500;
+                hi.current = 100;
+                padd.current = 92;
+                pressed.current = true;
+                setShowList(true);
+
+            });
+
         }
-
-        ).start();
-
-    }
-
-    const expand = easing => {
-        Animated.timing(size, {
-            toValue: {x: 400, y:50},
-            duration: 1200,
-            easing,
-            useNativeDriver: false,
-        }
-
-        ).start(() => moveToTop(easing));
-
-    }
-
-
-    const moveToTop = easing =>{
-
-        Animated.timing(pos2, {
-            toValue: 1,
-            duration: 1200,
-            easing,
-            useNativeDriver: true,
-
-        }).start();
-
-
 
     };
+
+
+    const reverseAll = easing => {
+        Animated.parallel(
+            [
+                Animated.timing(finVal, {
+                    toValue: 0,
+                    duration: 300,
+                    easing,
+                    useNativeDriver: true,
+
+                }),
+                Animated.timing(finVal2, {
+                    toValue: 0,
+                    duration: 300,
+                    easing,
+                    useNativeDriver: true,
+                }),
+            ]
+
+        ).start(() => {
+            wi.current = 300;
+            hi.current = 200;
+            padd.current = 0;
+            pressed.current = false;
+            setShowList(false);
+            
+        });
+
+    }
+
 
     const animatedStyles = [
         styles.mainBox,
         {
-          width: 250,
-          height: 250,
-          transform: [
-            {
-                translateX: pos2_2,
-            },
-            {
-                translateY: pos2_1,
-            },
-            {
-                scaleX: pos2_3,
-            },
-            {
-                scaleY: pos2_4,
-            }
-          ]
-          
-        }
-      ];
+            width: wi.current,
+            height: hi.current,
+            marginTop: padd.current,
+            transform: [
+                {
+                    translateY: transY,
+                },
+                {
+                    scaleX: xScale,
+                },
+                {
+                    scaleY: yScale,
+                }
+            ]
 
-      const animatedStyles2 = [
-        styles.mainBox,
+        }
+    ];
+
+    const animatedStyles2 = [
+        styles.mainBox2,
         {
-          transform: [
-            {
-                scaleX: pos2_5,
-            },
-            {
-                scaleY: pos2_6,
-            }
-          ]
-          
-        }
-      ];
-    
+            width: wi.current,
+            opacity: changeOpacity,
+            transform: [
+                {
+                    scaleX: xDescale,
+                },
+                {
+                    scaleY: yDescale,
+                }
+            ]
 
-    return(
-        <TouchableOpacity onPress = {() => moveToTop(Easing.linear)}>    
-            <Animated.View style={animatedStyles} >
-                <Animated.View style={animatedStyles2}>
-                    <Text adjustsFontSizeToFit={true} style={{fontSize:15, maxWidth:150}}>S creen animation will begin in 3 seconds</Text>
+        }
+    ];
+
+    const animatedStyles3 = [
+        styles.mainImage,
+        {
+            opacity: changeIconOpa
+        }
+    ]
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            moveAndExpand(Easing.linear);
+            
+        }, 3000)
+    }, [])
+
+
+
+
+    return (
+        <View style={styles.mainContainer}>
+            <TouchableWithoutFeedback onPress={() => moveAndExpand(Easing.linear)}>
+                <Animated.View style={animatedStyles}>
+                    <Animated.View style={animatedStyles2}>
+                        {showList ? <TouchableWithoutFeedback onPress={() => reverseAll(Easing.linear)} >
+                            <Animated.Image style={styles.mainImage} source={require('../images/back.png')}></Animated.Image>
+                        </TouchableWithoutFeedback> : <View style={styles.mainImage}></View>}
+                        <Text style={styles.mainText} >Screen animation will begin in 3 seconds</Text>
+                        <View></View>
+                    </Animated.View>
                 </Animated.View>
-                   
-            </Animated.View>
-        </TouchableOpacity>
+            </TouchableWithoutFeedback>
+            <View style={styles.mainItems}>
+                {showList && <IndiTabs content={content}></IndiTabs>}
+            </View>
+
+        </View>
 
     )
 
 }
 
 export default MainPage;
+//<IndiTabs content={content}></IndiTabs>
