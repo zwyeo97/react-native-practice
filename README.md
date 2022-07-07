@@ -1,1 +1,1 @@
-simple react-native project
+simple react-native project with redux
